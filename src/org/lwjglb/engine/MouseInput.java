@@ -17,6 +17,8 @@ public class MouseInput {
     private boolean leftButtonPressed = false;
 
     private boolean rightButtonPressed = false;
+    
+    private boolean middleButtonPressed = false;
 
     public MouseInput() {
         previousPos = new Vector2d(-1, -1);
@@ -35,6 +37,7 @@ public class MouseInput {
         glfwSetMouseButtonCallback(window.getWindowHandle(), (windowHandle, button, action, mode) -> {
             leftButtonPressed = button == GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS;
             rightButtonPressed = button == GLFW_MOUSE_BUTTON_2 && action == GLFW_PRESS;
+            middleButtonPressed = button == GLFW_MOUSE_BUTTON_3 && action == GLFW_PRESS;
         });
     }
 
@@ -68,4 +71,8 @@ public class MouseInput {
     public boolean isRightButtonPressed() {
         return rightButtonPressed;
     }
+    
+    public boolean isMiddleButtonPressed() {
+        return middleButtonPressed;
+    }    
 }
