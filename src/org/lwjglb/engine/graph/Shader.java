@@ -32,7 +32,7 @@ import org.lwjglb.engine.Utils;
 
 import static org.lwjgl.opengl.GL20.glGetAttribLocation;
 
-public class ShaderProgram {
+public class Shader {
 
     private final int programId;
 
@@ -44,14 +44,14 @@ public class ShaderProgram {
 
     private final Map<String, Integer> uniforms  = new HashMap<>();
 
-    public ShaderProgram() throws Exception {
+    public Shader() throws Exception {
         programId = glCreateProgram();
         if (programId == 0) {
             throw createProgramException;
         }
     }
     
-    public ShaderProgram(String vertex, String fragmet, String[] uniformNames) throws Exception {
+    public Shader(String vertex, String fragmet, String[] uniformNames) throws Exception {
         programId = glCreateProgram();
         if (programId == 0) {
         	throw createProgramException;

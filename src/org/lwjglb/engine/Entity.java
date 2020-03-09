@@ -3,12 +3,12 @@ package org.lwjglb.engine;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjglb.engine.graph.Mesh;
-import org.lwjglb.engine.graph.ShaderProgram;
+import org.lwjglb.engine.graph.Shader;
 
-public class GameItem {
+public class Entity {
 
 	private final Mesh mesh;
-	private final ShaderProgram shaderProgram;
+	private final Shader shader;
 
 	private final Vector3f position;
 
@@ -16,9 +16,9 @@ public class GameItem {
 
 	private final Vector3f rotation;
 
-	public GameItem(Mesh mesh, ShaderProgram shaderProgram) {
+	public Entity(Mesh mesh, Shader shaderProgram) {
 		this.mesh = mesh;
-		this.shaderProgram = shaderProgram;
+		this.shader = shaderProgram;
 
 		position = new Vector3f();
 		scale = 1;
@@ -54,12 +54,12 @@ public class GameItem {
 	}
 
 	public void draw(Matrix4f projectionMatrix, Matrix4f viewMatrix, Matrix4f modelViewMatrix) {
-		shaderProgram.bind();
-		shaderProgram.setUniform("projectionMatrix", projectionMatrix);
-		shaderProgram.setUniform("viewMatrix", viewMatrix);
-		shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
+		shader.bind();
+		shader.setUniform("projectionMatrix", projectionMatrix);
+		shader.setUniform("viewMatrix", viewMatrix);
+		shader.setUniform("modelViewMatrix", modelViewMatrix);
 		mesh.draw();
-		shaderProgram.unbind();
+		shader.unbind();
 	};
 
 	public Mesh getMesh() {
@@ -67,8 +67,8 @@ public class GameItem {
 	}
 
 	public void cleanup() {
-		if (shaderProgram != null) {
-			shaderProgram.cleanup();
+		if (shader != null) {
+			shader.cleanup();
 		}
 
 		if (mesh != null) {

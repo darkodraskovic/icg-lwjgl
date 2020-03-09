@@ -1,6 +1,6 @@
 package org.lwjglb.engine;
 
-public class GameEngine implements Runnable {
+public class App implements Runnable {
 
     public static final int TARGET_FPS = 75;
 
@@ -10,13 +10,13 @@ public class GameEngine implements Runnable {
 
     private final Timer timer;
 
-    private final IGameLogic gameLogic;
+    private final ILogic gameLogic;
 
-    private final MouseInput mouseInput;
+    private final Mouse mouseInput;
 
-    public GameEngine(String windowTitle, int width, int height, boolean vSync, IGameLogic gameLogic) throws Exception {
+    public App(String windowTitle, int width, int height, boolean vSync, ILogic gameLogic) throws Exception {
         window = new Window(windowTitle, width, height, vSync);
-        mouseInput = new MouseInput();
+        mouseInput = new Mouse();
         this.gameLogic = gameLogic;
         timer = new Timer();
     }

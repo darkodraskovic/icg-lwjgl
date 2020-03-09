@@ -1,12 +1,12 @@
 package org.lwjglb.engine;
 
-public interface IGameLogic {
+public interface ILogic {
 
     void init(Window window) throws Exception;
     
-    void input(Window window, MouseInput mouseInput);
+    void input(Window window, Mouse mouseInput);
 
-    void update(float interval, MouseInput mouseInput);
+    void update(float interval, Mouse mouseInput);
     
     void render(Window window);
     

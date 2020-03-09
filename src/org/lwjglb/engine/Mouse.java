@@ -4,7 +4,7 @@ import org.joml.Vector2d;
 import org.joml.Vector2f;
 import static org.lwjgl.glfw.GLFW.*;
 
-public class MouseInput {
+public class Mouse {
 
     private final Vector2d previousPos;
 
@@ -20,7 +20,7 @@ public class MouseInput {
     
     private boolean middleButtonPressed = false;
 
-    public MouseInput() {
+    public Mouse() {
         previousPos = new Vector2d(-1, -1);
         currentPos = new Vector2d(0, 0);
         displVec = new Vector2f();

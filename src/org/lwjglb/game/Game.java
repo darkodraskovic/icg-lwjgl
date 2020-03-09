@@ -6,51 +6,72 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_E;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_Q;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_S;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_W;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glViewport;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-import org.lwjglb.engine.GameItem;
-import org.lwjglb.engine.IGameLogic;
-import org.lwjglb.engine.MouseInput;
+import org.lwjglb.engine.App;
+import org.lwjglb.engine.Entity;
+import org.lwjglb.engine.ILogic;
+import org.lwjglb.engine.Mouse;
 import org.lwjglb.engine.Window;
 import org.lwjglb.engine.graph.Camera;
-import org.lwjglb.engine.graph.ShaderProgram;
+import org.lwjglb.engine.graph.Shader;
+import org.lwjglb.engine.graph.Transformation;
 
-public class Game implements IGameLogic {
+public class Game implements ILogic {
 	private static final float MOUSE_SENSITIVITY = 0.2f;
 
+	private static final float FOV = (float) Math.toRadians(60.0f);
+	private static final float Z_NEAR = 0.01f;
+	private static final float Z_FAR = 1000.f;
 	private static final float CAMERA_POS_STEP = 0.05f;
 	private final Vector3f cameraInc;
 	private final Camera camera;
 
-	private final Renderer renderer;
+	private final Transformation transformation  = new Transformation();
 
-	private ArrayList<GameItem> gameItems;
+	private ArrayList<Entity> entities;
 
+    public static void main(String[] args) {
+        try {
+            boolean vSync = true;
+            ILogic gameLogic = new Game();
+            App gameEng = new App("GAME", 600, 480, vSync, gameLogic);
+            gameEng.run();
+        } catch (Exception excp) {
+            excp.printStackTrace();
+            System.exit(-1);
+        }
+    }	
+	
 	public Game() {
-		renderer = new Renderer();
 		camera = new Camera();
 		cameraInc = new Vector3f();
 
-		gameItems = new ArrayList<GameItem>();
+		entities = new ArrayList<Entity>();
 	}
 
 	@Override
 	public void init(Window window) throws Exception {
-		ShaderProgram shaderProgram = new ShaderProgram("/shaders/vertex.vs", "/shaders/fragment.fs",
+		Shader shaderProgram = new Shader("/shaders/vertex.vs", "/shaders/fragment.fs",
 				new String[] { "projectionMatrix", "viewMatrix", "modelViewMatrix" });
 		Triangle triangle = new Triangle();
-		GameItem gameItem = new GameItem(triangle, shaderProgram);
-		gameItems.add(gameItem);
+		Entity entity = new Entity(triangle, shaderProgram);
+		entities.add(entity);
 		
 		camera.setPosition(0, 0, 1);
 	}
 
 	@Override
-	public void input(Window window, MouseInput mouseInput) {
+	public void input(Window window, Mouse mouseInput) {
 		cameraInc.set(0, 0, 0);
 		if (window.isKeyPressed(GLFW_KEY_W)) {
 			cameraInc.z = -1;
@@ -70,7 +91,7 @@ public class Game implements IGameLogic {
 	}
 
 	@Override
-	public void update(float interval, MouseInput mouseInput) {
+	public void update(float interval, Mouse mouseInput) {
 		// Update camera position
 		camera.movePosition(cameraInc.x * CAMERA_POS_STEP, cameraInc.y * CAMERA_POS_STEP,
 				cameraInc.z * CAMERA_POS_STEP);
@@ -84,14 +105,29 @@ public class Game implements IGameLogic {
 
 	@Override
 	public void render(Window window) {
-		renderer.render(window, camera, gameItems);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		if (window.isResized()) {
+			glViewport(0, 0, window.getWidth(), window.getHeight());
+			window.setResized(false);
+		}
+
+		Matrix4f projectionMatrix = transformation.getProjectionMatrix(FOV, window.getWidth(), window.getHeight(),
+				Z_NEAR, Z_FAR);
+		Matrix4f viewMatrix = transformation.getViewMatrix(camera);
+
+		for (Iterator<Entity> iterator = entities.iterator(); iterator.hasNext();) {
+			Entity iEntity = (Entity) iterator.next();
+			Matrix4f modelViewMatrix = transformation.getModelViewMatrix(iEntity, viewMatrix);
+			iEntity.draw(projectionMatrix, viewMatrix, modelViewMatrix);
+		}
 	}
 
 	@Override
 	public void cleanup() {
-		for (Iterator<GameItem> iterator = gameItems.iterator(); iterator.hasNext();) {
-			GameItem iGameItem = (GameItem) iterator.next();
-			iGameItem.cleanup();
+		for (Iterator<Entity> iterator = entities.iterator(); iterator.hasNext();) {
+			Entity iEntity = (Entity) iterator.next();
+			iEntity.cleanup();
 		}
 	}
 
