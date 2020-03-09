@@ -28,30 +28,48 @@ import java.util.Map;
 
 import org.joml.Matrix4f;
 import org.lwjgl.system.MemoryStack;
+import org.lwjglb.engine.Utils;
+
 import static org.lwjgl.opengl.GL20.glGetAttribLocation;
 
 public class ShaderProgram {
 
     private final int programId;
 
+    private final Exception createProgramException = new Exception("Could not create Shader");
+    
     private int vertexShaderId;
 
     private int fragmentShaderId;
 
-    private final Map<String, Integer> uniforms;
+    private final Map<String, Integer> uniforms  = new HashMap<>();
 
     public ShaderProgram() throws Exception {
         programId = glCreateProgram();
         if (programId == 0) {
-            throw new Exception("Could not create Shader");
+            throw createProgramException;
         }
-        uniforms = new HashMap<>();
+    }
+    
+    public ShaderProgram(String vertex, String fragmet, String[] uniformNames) throws Exception {
+        programId = glCreateProgram();
+        if (programId == 0) {
+        	throw createProgramException;
+        }
+        
+		createVertexShader(Utils.loadResource(vertex));
+		createFragmentShader(Utils.loadResource(fragmet));
+		link();
+		
+		for (int i = 0; i < uniformNames.length; i++) {
+			createUniform(uniformNames[i]);
+		}
     }
 
     public void createUniform(String uniformName) throws Exception {
         int uniformLocation = glGetUniformLocation(programId, uniformName);
         if (uniformLocation < 0) {
-            throw new Exception("Could not find uniform:" + uniformName);
+//            throw new Exception("Could not find uniform:" + uniformName);
         }
         uniforms.put(uniformName, uniformLocation);
     }
