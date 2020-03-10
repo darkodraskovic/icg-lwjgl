@@ -10,29 +10,42 @@ public class Entity {
 	private Mesh mesh;
 
 	private Shader shader;
-
+	private String[] transformUniforms = new String[] { "projectionMatrix", "viewMatrix", "modelViewMatrix", };
+	
 	private final Vector3f position = new Vector3f();
 
 	private float scale = 1;
 
 	private final Vector3f rotation = new Vector3f();
 
+	public Entity() {
+		super();
+	}
+
+	public Entity(Shader shader, Mesh mesh) throws Exception {
+		setShader(shader);
+		this.mesh = mesh;
+	}
+
 	public Shader getShader() {
 		return shader;
 	}
 
-	public void setShader(Shader shader) throws Exception{
+	public void setShader(Shader shader) throws Exception {
 		this.shader = shader;
-		
-		shader.createUniform("projectionMatrix");
-		shader.createUniform("viewMatrix");
-		shader.createUniform("modelViewMatrix");
+		for (String uniform : transformUniforms) {
+			shader.createUniform(uniform);
+		}
+	}
+
+	public Mesh getMesh() {
+		return mesh;
 	}
 
 	public void setMesh(Mesh mesh) {
 		this.mesh = mesh;
 	}
-	
+
 	public Vector3f getPosition() {
 		return position;
 	}
@@ -69,10 +82,6 @@ public class Entity {
 		mesh.draw();
 		shader.unbind();
 	};
-
-	public Mesh getMesh() {
-		return mesh;
-	}
 
 	public void cleanup() {
 		if (shader != null) {

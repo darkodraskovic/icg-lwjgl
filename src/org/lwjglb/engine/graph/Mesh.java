@@ -8,6 +8,7 @@ import static org.lwjgl.opengl.GL11.glDrawArrays;
 import static org.lwjgl.opengl.GL11.glDrawElements;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
 import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 import static org.lwjgl.opengl.GL15.glBindBuffer;
 import static org.lwjgl.opengl.GL15.glBufferData;
@@ -21,15 +22,17 @@ import static org.lwjgl.opengl.GL30.glDeleteVertexArrays;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.lwjgl.system.MemoryUtil;
 
 public class Mesh {
-	private int vao  = glGenVertexArrays();
-	private ArrayList<Integer> vbos  = new ArrayList<Integer>();
-	private long[] indices;
+	private int vao = glGenVertexArrays();
+	private ArrayList<Integer> vbos = new ArrayList<Integer>();
+	private int[] indices;
+
 	private int mode;
 	private int count;
 
@@ -41,16 +44,9 @@ public class Mesh {
 		this.mode = mode;
 	}
 
-
-	public int getCount() {
-		return count;
-	}
-
-	public void setCount(int count) {
-		this.count = count;
-	}
-
 	public void genArrayBufferf(float[] vertices, int index, int size) {
+		count = vertices.length / size;
+
 		int vbo;
 		FloatBuffer buffer = null;
 
@@ -71,7 +67,6 @@ public class Mesh {
 
 			// Unbind the VBO
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
-
 			// Unbind the VAO
 			glBindVertexArray(0);
 		} finally {
@@ -83,11 +78,40 @@ public class Mesh {
 		vbos.add(vbo);
 	}
 
-	public void draw() {
-		if(indices != null) {
-			drawElements();
+	public void genElementBuffer(int[] indices) {
+		int vbo;
+		IntBuffer buffer = null;
+
+		try {
+			buffer = MemoryUtil.memAllocInt(indices.length);
+			buffer.put(indices).flip();
+
+			glBindVertexArray(vao);
+
+			// Create the VBO and bind to it
+			vbo = glGenBuffers();
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
+
+			// Unbind the VBO
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			// Unbind the VAO
+			glBindVertexArray(0);
+
+			this.indices = indices;
+		} finally {
+			if (buffer != null) {
+				MemoryUtil.memFree(buffer);
+			}
 		}
-		else {
+
+		vbos.add(vbo);
+	}
+
+	public void draw() {
+		if (indices != null) {
+			drawElements();
+		} else {
 			drawArrays();
 		}
 	};
@@ -113,7 +137,7 @@ public class Mesh {
 		glBindVertexArray(vao);
 
 		// Draw the vertices
-		glDrawElements(mode, count, GL_UNSIGNED_INT, 0);
+		glDrawElements(mode, indices.length, GL_UNSIGNED_INT, 0);
 
 		// Restore state
 		glBindVertexArray(0);

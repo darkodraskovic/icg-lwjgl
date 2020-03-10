@@ -24,6 +24,7 @@ import org.lwjglb.engine.Mouse;
 import org.lwjglb.engine.Window;
 import org.lwjglb.engine.graph.Camera;
 import org.lwjglb.engine.graph.Transformation;
+
 public class Game implements ILogic {
 	private static final float MOUSE_SENSITIVITY = 0.2f;
 
@@ -34,22 +35,22 @@ public class Game implements ILogic {
 	private final Vector3f cameraInc;
 	private final Camera camera;
 
-	private final Transformation transformation  = new Transformation();
+	private final Transformation transformation = new Transformation();
 
 	private ArrayList<Entity> entities;
 
-    public static void main(String[] args) {
-        try {
-            boolean vSync = true;
-            ILogic gameLogic = new Game();
-            App gameEng = new App("GAME", 600, 480, vSync, gameLogic);
-            gameEng.run();
-        } catch (Exception excp) {
-            excp.printStackTrace();
-            System.exit(-1);
-        }
-    }	
-	
+	public static void main(String[] args) {
+		try {
+			boolean vSync = true;
+			ILogic gameLogic = new Game();
+			App gameEng = new App("GAME", 600, 480, vSync, gameLogic);
+			gameEng.run();
+		} catch (Exception excp) {
+			excp.printStackTrace();
+			System.exit(-1);
+		}
+	}
+
 	public Game() {
 		camera = new Camera();
 		cameraInc = new Vector3f();
@@ -61,7 +62,7 @@ public class Game implements ILogic {
 	public void init(Window window) throws Exception {
 		Entity entity = new Triangle();
 		entities.add(entity);
-		
+
 		camera.setPosition(0, 0, 1);
 	}
 
