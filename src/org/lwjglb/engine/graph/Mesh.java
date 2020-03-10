@@ -2,6 +2,7 @@ package org.lwjglb.engine.graph;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
 import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL11.glDrawArrays;
 import static org.lwjgl.opengl.GL11.glDrawElements;
@@ -25,16 +26,31 @@ import java.util.Iterator;
 
 import org.lwjgl.system.MemoryUtil;
 
-abstract public class Mesh {
-	private int vao;
-	private ArrayList<Integer> vbos;
+public class Mesh {
+	private int vao  = glGenVertexArrays();
+	private ArrayList<Integer> vbos  = new ArrayList<Integer>();
+	private long[] indices;
+	private int mode;
+	private int count;
 
-	public Mesh() {
-		vao = glGenVertexArrays();
-		vbos = new ArrayList<Integer>();
+	public int getMode() {
+		return mode;
 	}
 
-	protected void genArrayBufferf(float[] vertices, int index, int size) {
+	public void setMode(int mode) {
+		this.mode = mode;
+	}
+
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public void genArrayBufferf(float[] vertices, int index, int size) {
 		int vbo;
 		FloatBuffer buffer = null;
 
@@ -67,30 +83,37 @@ abstract public class Mesh {
 		vbos.add(vbo);
 	}
 
-	abstract public void draw();
+	public void draw() {
+		if(indices != null) {
+			drawElements();
+		}
+		else {
+			drawArrays();
+		}
+	};
 
 	protected void setTexture2D(int texture, int target) {
 		glActiveTexture(texture);
 		glBindTexture(GL_TEXTURE_2D, target);
 	}
 
-	protected void drawArrays(int mode, int first, int count) {
+	protected void drawArrays() {
 		// Bind to the VAO
 		glBindVertexArray(vao);
 
 		// Draw the vertices
-		glDrawArrays(mode, first, count);
+		glDrawArrays(mode, 0, count);
 
 		// Restore state
 		glBindVertexArray(0);
 	}
 
-	protected void drawElements(int mode, int count, int type) {
+	protected void drawElements() {
 		// Bind to the VAO
 		glBindVertexArray(vao);
 
 		// Draw the vertices
-		glDrawElements(mode, count, type, 0);
+		glDrawElements(mode, count, GL_UNSIGNED_INT, 0);
 
 		// Restore state
 		glBindVertexArray(0);

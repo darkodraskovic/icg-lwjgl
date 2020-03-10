@@ -7,24 +7,32 @@ import org.lwjglb.engine.graph.Shader;
 
 public class Entity {
 
-	private final Mesh mesh;
-	private final Shader shader;
+	private Mesh mesh;
 
-	private final Vector3f position;
+	private Shader shader;
 
-	private float scale;
+	private final Vector3f position = new Vector3f();
 
-	private final Vector3f rotation;
+	private float scale = 1;
 
-	public Entity(Mesh mesh, Shader shaderProgram) {
-		this.mesh = mesh;
-		this.shader = shaderProgram;
+	private final Vector3f rotation = new Vector3f();
 
-		position = new Vector3f();
-		scale = 1;
-		rotation = new Vector3f();
+	public Shader getShader() {
+		return shader;
 	}
 
+	public void setShader(Shader shader) throws Exception{
+		this.shader = shader;
+		
+		shader.createUniform("projectionMatrix");
+		shader.createUniform("viewMatrix");
+		shader.createUniform("modelViewMatrix");
+	}
+
+	public void setMesh(Mesh mesh) {
+		this.mesh = mesh;
+	}
+	
 	public Vector3f getPosition() {
 		return position;
 	}

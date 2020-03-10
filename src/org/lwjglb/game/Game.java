@@ -23,9 +23,7 @@ import org.lwjglb.engine.ILogic;
 import org.lwjglb.engine.Mouse;
 import org.lwjglb.engine.Window;
 import org.lwjglb.engine.graph.Camera;
-import org.lwjglb.engine.graph.Shader;
 import org.lwjglb.engine.graph.Transformation;
-
 public class Game implements ILogic {
 	private static final float MOUSE_SENSITIVITY = 0.2f;
 
@@ -61,10 +59,7 @@ public class Game implements ILogic {
 
 	@Override
 	public void init(Window window) throws Exception {
-		Shader shaderProgram = new Shader("/shaders/vertex.vs", "/shaders/fragment.fs",
-				new String[] { "projectionMatrix", "viewMatrix", "modelViewMatrix" });
-		Triangle triangle = new Triangle();
-		Entity entity = new Entity(triangle, shaderProgram);
+		Entity entity = new Triangle();
 		entities.add(entity);
 		
 		camera.setPosition(0, 0, 1);

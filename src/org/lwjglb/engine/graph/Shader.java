@@ -51,19 +51,15 @@ public class Shader {
         }
     }
     
-    public Shader(String vertex, String fragmet, String[] uniformNames) throws Exception {
+    public Shader(String vertex, String fragment) throws Exception {
         programId = glCreateProgram();
         if (programId == 0) {
         	throw createProgramException;
         }
         
 		createVertexShader(Utils.loadResource(vertex));
-		createFragmentShader(Utils.loadResource(fragmet));
+		createFragmentShader(Utils.loadResource(fragment));
 		link();
-		
-		for (int i = 0; i < uniformNames.length; i++) {
-			createUniform(uniformNames[i]);
-		}
     }
 
     public void createUniform(String uniformName) throws Exception {
