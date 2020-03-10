@@ -1,4 +1,4 @@
-package org.lwjglb.game;
+package angel.chapter02;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_A;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_D;
@@ -60,7 +60,7 @@ public class Game implements ILogic {
 
 	@Override
 	public void init(Window window) throws Exception {
-		Entity entity = new Triangle();
+		Entity entity = new Ex00_Flower();
 		entities.add(entity);
 
 		camera.setPosition(0, 0, 2);

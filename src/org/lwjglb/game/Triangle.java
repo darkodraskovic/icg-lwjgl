@@ -22,4 +22,10 @@ public class Triangle extends Entity {
 		mesh.genElementBuffer(new int[] { 0, 1, 1, 2, 2, 0 });
 		setMesh(mesh);
 	}
+
+	@Override
+	public void update(float interval) {
+		// TODO Auto-generated method stub
+		
+	}
 }
