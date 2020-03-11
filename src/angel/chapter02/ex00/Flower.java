@@ -1,4 +1,4 @@
-package angel.chapter02;
+package angel.chapter02.ex00;
 
 import static org.lwjgl.opengl.GL11.GL_LINE_STRIP;
 
@@ -8,8 +8,8 @@ import org.lwjglb.engine.Entity;
 import org.lwjglb.engine.graph.Mesh;
 import org.lwjglb.engine.graph.Shader;
 
-public class Ex00_Flower extends Entity {
-	public Ex00_Flower() throws Exception {
+public class Flower extends Entity {
+	public Flower() throws Exception {
 		super();
 
 		Shader shader = new Shader("/shaders/vertex.vs", "/shaders/fragment.fs");

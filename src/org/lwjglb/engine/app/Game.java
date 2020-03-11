@@ -1,4 +1,4 @@
-package org.lwjglb.game;
+package org.lwjglb.engine.app;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_A;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_D;
@@ -17,7 +17,6 @@ import java.util.Iterator;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-import org.lwjglb.engine.App;
 import org.lwjglb.engine.Entity;
 import org.lwjglb.engine.ILogic;
 import org.lwjglb.engine.Mouse;
@@ -25,46 +24,40 @@ import org.lwjglb.engine.Window;
 import org.lwjglb.engine.graph.Camera;
 import org.lwjglb.engine.graph.Transformation;
 
-public class Game implements ILogic {
-	private static final float MOUSE_SENSITIVITY = 0.2f;
+public abstract class Game implements ILogic {
+	protected float mouseSensitivity = 0.2f;
 
 	private static final float FOV = (float) Math.toRadians(60.0f);
 	private static final float Z_NEAR = 0.01f;
 	private static final float Z_FAR = 1000.f;
-	private static final float CAMERA_POS_STEP = 0.05f;
-	private final Vector3f cameraInc;
+	protected float cameraPosStep = 0.05f;
+	private final Vector3f cameraInc = new Vector3f();
 	private final Camera camera;
 
 	private final Transformation transformation = new Transformation();
 
-	private ArrayList<Entity> entities;
+	protected ArrayList<Entity> entities;
 
-	public static void main(String[] args) {
-		try {
-			boolean vSync = true;
-			ILogic gameLogic = new Game();
-			App gameEng = new App("GAME", 600, 480, vSync, gameLogic);
-			gameEng.run();
-		} catch (Exception excp) {
-			excp.printStackTrace();
-			System.exit(-1);
-		}
-	}
+//	public static void main(String[] args) {
+//		try {
+//			boolean vSync = true;
+//			ILogic gameLogic = new MyGame();
+//			App game = new App("GAME", 600, 480, vSync, gameLogic);
+//			game.run();
+//		} catch (Exception excp) {
+//			excp.printStackTrace();
+//			System.exit(-1);
+//		}
+//	}
 
 	public Game() {
 		camera = new Camera();
-		cameraInc = new Vector3f();
-
+		camera.setPosition(0, 0, 2);
 		entities = new ArrayList<Entity>();
 	}
 
 	@Override
-	public void init(Window window) throws Exception {
-		Entity entity = new Triangle();
-		entities.add(entity);
-
-		camera.setPosition(0, 0, 2);
-	}
+	abstract public void init(Window window) throws Exception;
 
 	@Override
 	public void input(Window window, Mouse mouseInput) {
@@ -89,19 +82,18 @@ public class Game implements ILogic {
 	@Override
 	public void update(float interval, Mouse mouseInput) {
 		// Update camera position
-		camera.movePosition(cameraInc.x * CAMERA_POS_STEP, cameraInc.y * CAMERA_POS_STEP,
-				cameraInc.z * CAMERA_POS_STEP);
+		camera.movePosition(cameraInc.x * cameraPosStep, cameraInc.y * cameraPosStep, cameraInc.z * cameraPosStep);
 
 		// Update camera based on mouse
 		if (mouseInput.isMiddleButtonPressed()) {
 			Vector2f rotVec = mouseInput.getDisplVec();
-			camera.moveRotation(rotVec.x * MOUSE_SENSITIVITY, rotVec.y * MOUSE_SENSITIVITY, 0);
+			camera.moveRotation(rotVec.x * mouseSensitivity, rotVec.y * mouseSensitivity, 0);
 		}
-		
+
 		for (Iterator<Entity> iterator = entities.iterator(); iterator.hasNext();) {
 			Entity iEntity = (Entity) iterator.next();
 			iEntity.update(interval);
-		}		
+		}
 	}
 
 	@Override
