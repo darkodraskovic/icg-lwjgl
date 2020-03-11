@@ -11,7 +11,7 @@ public class Angel extends Game {
 		try {
 			boolean vSync = true;
 			ILogic gameLogic = new Angel();
-			App game = new App("GAME", 600, 480, vSync, gameLogic);
+			App game = new App("ANGEL", 800, 600, vSync, gameLogic);
 			game.run();
 		} catch (Exception excp) {
 			excp.printStackTrace();
@@ -21,6 +21,7 @@ public class Angel extends Game {
 
 	@Override
 	public void init(Window window) throws Exception {
-		entities.add(new Flower());
+//		entities.add(new Flower());
+		entities.add(new Sierpinski00());
 	}
 }

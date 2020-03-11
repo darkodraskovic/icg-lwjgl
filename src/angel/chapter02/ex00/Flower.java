@@ -17,11 +17,12 @@ public class Flower extends Entity {
 
 		Mesh mesh = new Mesh();
 		mesh.setMode(GL_LINE_STRIP);
+		setMesh(mesh);
+		
+		// vertices
 		ArrayList<Float> vs = new ArrayList<Float>();
-
 		int numSteps = 12;
 		double angleStep = (Math.PI * 2) / numSteps;
-
 		vs.add(0.0f);
 		vs.add(0.0f);
 		vs.add(0.0f);
@@ -41,7 +42,8 @@ public class Flower extends Entity {
 
 		mesh.genArrayBufferf(vertices, 0, 3);
 		mesh.genArrayBufferf(colors, 1, 3);
-
+		
+		// indices
 		int[] indices = new int[numSteps / 2 * 3 + 1];
 		int index = 0;
 		for (int i = 0; i < numSteps / 2; i++) {
@@ -52,8 +54,6 @@ public class Flower extends Entity {
 		indices[indices.length - 1] = 0;
 
 		mesh.genElementBuffer(indices);
-
-		setMesh(mesh);
 	}
 
 	@Override

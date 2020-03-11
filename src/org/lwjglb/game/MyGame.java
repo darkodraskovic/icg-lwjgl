@@ -9,7 +9,7 @@ public class MyGame extends org.lwjglb.engine.app.Game {
 		try {
 			boolean vSync = true;
 			ILogic gameLogic = new MyGame();
-			App game = new App("GAME2", 600, 480, vSync, gameLogic);
+			App game = new App("MY_GAME", 600, 480, vSync, gameLogic);
 			game.run();
 		} catch (Exception excp) {
 			excp.printStackTrace();

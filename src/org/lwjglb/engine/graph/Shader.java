@@ -20,6 +20,7 @@ import static org.lwjgl.opengl.GL20.glGetUniformLocation;
 import static org.lwjgl.opengl.GL20.glLinkProgram;
 import static org.lwjgl.opengl.GL20.glShaderSource;
 import static org.lwjgl.opengl.GL20.glUniform1i;
+import static org.lwjgl.opengl.GL20.glUniform1f;
 import static org.lwjgl.opengl.GL20.glUniformMatrix4fv;
 import static org.lwjgl.opengl.GL20.glUseProgram;
 import static org.lwjgl.opengl.GL20.glValidateProgram;
@@ -43,6 +44,7 @@ public class Shader {
 
 	private final Map<String, Integer> uniforms = new HashMap<>();
 
+	// CONSTRUCTORS
 	public Shader() throws Exception {
 		programId = glCreateProgram();
 		if (programId == 0) {
@@ -61,25 +63,7 @@ public class Shader {
 		link();
 	}
 
-	public void createUniform(String uniformName) throws Exception {
-		int uniformLocation = glGetUniformLocation(programId, uniformName);
-		if (uniformLocation < 0) {
-//            throw new Exception("Could not find uniform:" + uniformName);
-		}
-		uniforms.put(uniformName, uniformLocation);
-	}
-
-	public void setUniform(String uniformName, Matrix4f value) {
-		// Dump the matrix into a float buffer
-		try (MemoryStack stack = MemoryStack.stackPush()) {
-			glUniformMatrix4fv(uniforms.get(uniformName), false, value.get(stack.mallocFloat(16)));
-		}
-	}
-
-	public void setUniform(String uniformName, int value) {
-		glUniform1i(uniforms.get(uniformName), value);
-	}
-
+	// CREATION
 	public void createVertexShader(String shaderCode) throws Exception {
 		vertexShaderId = createShader(shaderCode, GL_VERTEX_SHADER);
 	}
@@ -106,10 +90,6 @@ public class Shader {
 		return shaderId;
 	}
 
-	public int getAttribLocation(String name) {
-		return glGetAttribLocation(programId, name);
-	}
-
 	public void link() throws Exception {
 		glLinkProgram(programId);
 		if (glGetProgrami(programId, GL_LINK_STATUS) == 0) {
@@ -129,6 +109,41 @@ public class Shader {
 		}
 	}
 
+	// ATTRIBUTES
+	public int getAttribLocation(String attributeName) {
+		return glGetAttribLocation(programId, attributeName);
+	}
+
+	// UNIFORMS
+	public int getUniformLocation(String uniformName) {
+		return glGetUniformLocation(programId, uniformName);
+	}
+
+	public void createUniform(String uniformName) throws Exception {
+		int uniformLocation = glGetUniformLocation(programId, uniformName);
+		if (uniformLocation < 0) {
+			// throw new Exception("Could not find uniform:" + uniformName);
+		}
+		uniforms.put(uniformName, uniformLocation);
+	}
+
+	// set uniforms
+	public void setUniform(String uniformName, int value) {
+		glUniform1i(uniforms.get(uniformName), value);
+	}
+
+	public void setUniform(String uniformName, float value) {
+		glUniform1f(uniforms.get(uniformName), value);
+	}
+
+	public void setUniform(String uniformName, Matrix4f value) {
+		// Dump the matrix into a float buffer
+		try (MemoryStack stack = MemoryStack.stackPush()) {
+			glUniformMatrix4fv(uniforms.get(uniformName), false, value.get(stack.mallocFloat(16)));
+		}
+	}
+
+	// (UN)BIND
 	public void bind() {
 		glUseProgram(programId);
 	}
@@ -137,6 +152,7 @@ public class Shader {
 		glUseProgram(0);
 	}
 
+	// CLEANUP
 	public void cleanup() {
 		unbind();
 		if (programId != 0) {

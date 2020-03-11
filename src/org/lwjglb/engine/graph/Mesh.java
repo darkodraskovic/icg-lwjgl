@@ -14,7 +14,6 @@ import static org.lwjgl.opengl.GL15.glBindBuffer;
 import static org.lwjgl.opengl.GL15.glBufferData;
 import static org.lwjgl.opengl.GL15.glDeleteBuffers;
 import static org.lwjgl.opengl.GL15.glGenBuffers;
-import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
@@ -33,7 +32,14 @@ public class Mesh {
 	private ArrayList<Integer> vbos = new ArrayList<Integer>();
 	private int[] indices;
 
+	/**
+	 * The kind of primitives being constructed.
+	 */
 	private int mode;
+
+	/**
+	 * The total number of vertices.
+	 */
 	private int count;
 
 	public int getMode() {
@@ -44,23 +50,31 @@ public class Mesh {
 		this.mode = mode;
 	}
 
-	public void genArrayBufferf(float[] vertices, int index, int size) {
-		count = vertices.length / size;
+	// BUFFERS
+	/**
+	 * @param attribArray The vertex attribute float array.
+	 * @param index       The index of the generic vertex attribute to be modified.
+	 * @param size        The number of values per vertex that are stored in the
+	 *                    array.
+	 */
+	public void genArrayBufferf(float[] attribArray, int index, int size) {
+		count = attribArray.length / size;
 
 		int vbo;
 		FloatBuffer buffer = null;
 
 		try {
-			buffer = MemoryUtil.memAllocFloat(vertices.length);
-			buffer.put(vertices).flip();
+			buffer = MemoryUtil.memAllocFloat(attribArray.length);
+			buffer.put(attribArray).flip();
 
 			glBindVertexArray(vao);
 
 			// Create the VBO and bind to it
 			vbo = glGenBuffers();
 			glBindBuffer(GL_ARRAY_BUFFER, vbo);
+			// Transfer data from float buffer to VBO
 			glBufferData(GL_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
-			// Enable location 0
+			// Enable attribute location specified by index
 			glEnableVertexAttribArray(index);
 			// Define structure of the data
 			glVertexAttribPointer(index, size, GL_FLOAT, false, 0, 0);
@@ -77,7 +91,7 @@ public class Mesh {
 
 		vbos.add(vbo);
 	}
-
+	
 	public void genElementBuffer(int[] indices) {
 		int vbo;
 		IntBuffer buffer = null;
@@ -108,6 +122,7 @@ public class Mesh {
 		vbos.add(vbo);
 	}
 
+	// DRAW
 	public void draw() {
 		if (indices != null) {
 			drawElements();
@@ -121,7 +136,7 @@ public class Mesh {
 		glBindTexture(GL_TEXTURE_2D, target);
 	}
 
-	protected void drawArrays() {
+	private void drawArrays() {
 		// Bind to the VAO
 		glBindVertexArray(vao);
 
@@ -132,7 +147,7 @@ public class Mesh {
 		glBindVertexArray(0);
 	}
 
-	protected void drawElements() {
+	private void drawElements() {
 		// Bind to the VAO
 		glBindVertexArray(vao);
 
@@ -143,11 +158,13 @@ public class Mesh {
 		glBindVertexArray(0);
 	}
 
+	// CLEANUP
 	public void cleanup() {
-		glDisableVertexAttribArray(0);
+		// glDisableVertexAttribArray(0);
 
 		// Delete the VBO
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		for (Iterator<Integer> iterator = vbos.iterator(); iterator.hasNext();) {
 			Integer integer = (Integer) iterator.next();
 			glDeleteBuffers(integer);

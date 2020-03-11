@@ -25,7 +25,6 @@ public class Triangle extends Entity {
 
 	@Override
 	public void update(float interval) {
-		// TODO Auto-generated method stub
-		
+		moveRotation(0, 0, interval * 45);
 	}
 }
