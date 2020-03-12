@@ -30,9 +30,9 @@ public abstract class Game implements ILogic {
 	private static final float FOV = (float) Math.toRadians(60.0f);
 	private static final float Z_NEAR = 0.01f;
 	private static final float Z_FAR = 1000.f;
-	protected float cameraPosStep = 0.08f;
 	private final Vector3f cameraInc = new Vector3f();
-	private final Camera camera;
+	protected float cameraPosStep = 0.08f;
+	protected final Camera camera;
 
 	private final Transformation transformation = new Transformation();
 
@@ -40,7 +40,7 @@ public abstract class Game implements ILogic {
 
 	public Game() {
 		camera = new Camera();
-		camera.setPosition(0, 0, 2);
+		camera.setPosition(0, 0, 3);
 		entities = new ArrayList<Entity>();
 	}
 

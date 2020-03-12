@@ -6,14 +6,12 @@ import java.util.ArrayList;
 
 import org.lwjglb.engine.Entity;
 import org.lwjglb.engine.graph.Mesh;
-import org.lwjglb.engine.graph.Shader;
 
 public class Flower extends Entity {
 	public Flower() throws Exception {
 		super();
 
-		Shader shader = new Shader("/shaders/vertex.vs", "/shaders/fragment.fs");
-		setShader(shader);
+		setShader("/shaders/angel/vertex.vs", "/shaders/angel/fragment.fs");
 
 		mesh = new Mesh(GL_LINE_STRIP);
 		
@@ -38,8 +36,8 @@ public class Flower extends Entity {
 		}
 		colors[2] = 1;
 
-		mesh.genArrayBufferf(vertices, 0, 3);
-		mesh.genArrayBufferf(colors, 1, 3);
+		mesh.genArrayBufferf(vertices, 3);
+		mesh.genArrayBufferf(colors, 3);
 		
 		// indices
 		int[] indices = new int[numSteps / 2 * 3 + 1];

@@ -27,17 +27,28 @@ public abstract class Entity {
 		this.mesh = mesh;
 	}
 
+	// SHADER
 	public Shader getShader() {
 		return shader;
 	}
 
 	public void setShader(Shader shader) throws Exception {
 		this.shader = shader;
+		this.setTransformUniforms();
+	}
+
+	public void setShader(String vertex, String fragment) throws Exception {
+		shader = new Shader(vertex, fragment);
+		this.setTransformUniforms();
+	}
+	
+	private void setTransformUniforms() throws Exception {
 		for (String uniform : transformUniforms) {
 			shader.createUniform(uniform);
 		}
 	}
-
+	
+	// TRANSFORM
 	public Vector3f getPosition() {
 		return position;
 	}
@@ -77,6 +88,10 @@ public abstract class Entity {
         rotation.z += offsetZ;
     }	
 
+    // UPDATE
+    abstract public void update(float interval);
+    
+    // DRAW
 	public void draw(Matrix4f projectionMatrix, Matrix4f viewMatrix, Matrix4f modelViewMatrix) {
 		shader.bind();
 		shader.setUniform("projectionMatrix", projectionMatrix);
@@ -86,6 +101,7 @@ public abstract class Entity {
 		shader.unbind();
 	};
 
+	// CLEANUP
 	public void cleanup() {
 		if (shader != null) {
 			shader.cleanup();
@@ -95,6 +111,4 @@ public abstract class Entity {
 			mesh.cleanup();
 		}
 	}
-	
-	abstract public void update(float interval);
 }

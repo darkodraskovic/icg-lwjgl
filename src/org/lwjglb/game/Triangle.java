@@ -10,7 +10,7 @@ public class Triangle extends Entity {
 	public Triangle() throws Exception {
 		super();
 
-		Shader shader = new Shader("/shaders/vertex.vs", "/shaders/fragment.fs");
+		Shader shader = new Shader("/shaders/base/vertex.vs", "/shaders/base/fragment.fs");
 		setShader(shader);
 
 		mesh = new Mesh(GL_LINES);

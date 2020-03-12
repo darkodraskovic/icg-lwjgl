@@ -41,7 +41,7 @@ public class Shader {
 	private int vertexShaderId;
 
 	private int fragmentShaderId;
-
+	
 	private final Map<String, Integer> uniforms = new HashMap<>();
 
 	// CONSTRUCTORS

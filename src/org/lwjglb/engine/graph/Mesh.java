@@ -25,12 +25,15 @@ import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.joml.Vector3f;
 import org.lwjgl.system.MemoryUtil;
+import org.lwjglb.engine.Utils;
 
 public class Mesh {
 	private int vao = glGenVertexArrays();
 	private ArrayList<Integer> vbos = new ArrayList<Integer>();
 	private int[] indices;
+	private int idxVbo;
 
 	/**
 	 * The kind of primitives being constructed.
@@ -50,6 +53,8 @@ public class Mesh {
 	}
 
 	// BUFFERS
+
+	// GL_ARRAY_BUFFER
 	/**
 	 * @param attribArray The vertex attribute float array.
 	 * @param index       The index of the generic vertex attribute to be modified.
@@ -58,10 +63,9 @@ public class Mesh {
 	 */
 	public void genArrayBufferf(float[] attribArray, int index, int size) {
 		count = attribArray.length / size;
-
+		
 		int vbo;
 		FloatBuffer buffer = null;
-
 		try {
 			buffer = MemoryUtil.memAllocFloat(attribArray.length);
 			buffer.put(attribArray).flip();
@@ -91,10 +95,22 @@ public class Mesh {
 		vbos.add(vbo);
 	}
 
-	public void genElementBuffer(int[] indices) {
-		int vbo;
-		IntBuffer buffer = null;
+	public void genArrayBufferf(float[] attribArray, int size) {
+		genArrayBufferf(attribArray, vbos.size(), size);
+	}
 
+	public void genArrayBufferv3f(ArrayList<Vector3f> attribList, int index) {
+		float[] attribArray = Utils.Vector3fListToFloatArray(attribList);
+		genArrayBufferf(attribArray, index, 3);
+	}
+
+	public void genArrayBufferv3f(ArrayList<Vector3f> attribList) {
+		genArrayBufferv3f(attribList, vbos.size());
+	}
+
+	// GL_ELEMENT_ARRAY_BUFFER
+	public void genElementBuffer(int[] indices) {
+		IntBuffer buffer = null;
 		try {
 			buffer = MemoryUtil.memAllocInt(indices.length);
 			buffer.put(indices).flip();
@@ -102,8 +118,8 @@ public class Mesh {
 			glBindVertexArray(vao);
 
 			// Create the VBO and bind to it
-			vbo = glGenBuffers();
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo);
+			idxVbo = glGenBuffers();
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idxVbo);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
 
 			// Unbind the VBO
@@ -117,8 +133,11 @@ public class Mesh {
 				MemoryUtil.memFree(buffer);
 			}
 		}
+	}
 
-		vbos.add(vbo);
+	public void genElementBufferi(ArrayList<Integer> indicesList) {
+		int[] indicesArray = Utils.IntListToIntArray(indicesList);
+		genElementBuffer(indicesArray);
 	}
 
 	// DRAW
@@ -163,10 +182,14 @@ public class Mesh {
 
 		// Delete the VBO
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		for (Iterator<Integer> iterator = vbos.iterator(); iterator.hasNext();) {
 			Integer integer = (Integer) iterator.next();
 			glDeleteBuffers(integer);
+		}
+
+		if (indices != null) {
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+			glDeleteBuffers(idxVbo);
 		}
 
 		// Delete the VAO

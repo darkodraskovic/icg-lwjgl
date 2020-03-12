@@ -3,38 +3,36 @@ package angel.chapter02.ex00;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.joml.Vector3f;
 import org.lwjglb.engine.Entity;
-import org.lwjglb.engine.Utils;
 import org.lwjglb.engine.graph.Mesh;
-import org.lwjglb.engine.graph.Shader;
 
 public class Sierpinski3dDet extends Entity {
 
-	ArrayList<Vector3f> vertices;
-	ArrayList<Integer> indices;
+	ArrayList<Vector3f> vertices = new ArrayList<Vector3f>();
+	ArrayList<Vector3f> colors = new ArrayList<Vector3f>();
+	HashMap<String, Vector3f> baseColors;
 
 	public Sierpinski3dDet() throws Exception {
-		Shader shader = new Shader("/shaders/angel/vertex.vs", "/shaders/angel/fragment.fs");
-		setShader(shader);
+		baseColors = new HashMap<String, Vector3f>();
+		baseColors.put("red", new Vector3f(1, 0, 0));
+		baseColors.put("green", new Vector3f(0, 1, 0));
+		baseColors.put("blue", new Vector3f(0, 0, 1));
+		baseColors.put("magenta", new Vector3f(0, 1, 1));
 
+		setShader("/shaders/angel/vertex.vs", "/shaders/angel/fragment.fs");
 		mesh = new Mesh(GL_TRIANGLES);
-
-		// vertices
-		vertices = new ArrayList<Vector3f>();
-		indices = new ArrayList<Integer>();
 
 		Vector3f a = new Vector3f(-1, -1, -1);
 		Vector3f b = new Vector3f(0, -1, 1);
 		Vector3f c = new Vector3f(1, -1, -1);
 		Vector3f d = new Vector3f(0, 1, 0);
 		divide(a, b, c, d, 4);
-		float[] verts = Utils.Vector3fListToFloatArray(vertices);
-		mesh.genArrayBufferf(verts, 0, 3);
 
-		int[] idx = Utils.IntListToIntArray(indices);
-		mesh.genElementBuffer(idx);
+		mesh.genArrayBufferv3f(vertices);
+		mesh.genArrayBufferv3f(colors);
 	}
 
 	private void divide(Vector3f a, Vector3f b, Vector3f c, Vector3f d, int numDivisions) {
@@ -42,23 +40,30 @@ public class Sierpinski3dDet extends Entity {
 			vertices.add(a);
 			vertices.add(b);
 			vertices.add(c);
+			colors.add(baseColors.get("red"));
+			colors.add(baseColors.get("red"));
+			colors.add(baseColors.get("red"));
+
+			vertices.add(a);
+			vertices.add(b);
 			vertices.add(d);
-			int startIdx = vertices.size() - 4;
-			indices.add(startIdx);
-			indices.add(startIdx + 1);
-			indices.add(startIdx + 2);
+			colors.add(baseColors.get("green"));
+			colors.add(baseColors.get("green"));
+			colors.add(baseColors.get("green"));
 
-			indices.add(startIdx);
-			indices.add(startIdx + 1);
-			indices.add(startIdx + 3);
+			vertices.add(a);
+			vertices.add(c);
+			vertices.add(d);
+			colors.add(baseColors.get("blue"));
+			colors.add(baseColors.get("blue"));
+			colors.add(baseColors.get("blue"));
 
-			indices.add(startIdx);
-			indices.add(startIdx + 2);
-			indices.add(startIdx + 3);
-
-			indices.add(startIdx + 1);
-			indices.add(startIdx + 2);
-			indices.add(startIdx + 3);
+			vertices.add(b);
+			vertices.add(c);
+			vertices.add(d);
+			colors.add(baseColors.get("magenta"));
+			colors.add(baseColors.get("magenta"));
+			colors.add(baseColors.get("magenta"));
 
 			return;
 		}
@@ -79,8 +84,7 @@ public class Sierpinski3dDet extends Entity {
 
 	@Override
 	public void update(float interval) {
-		// TODO Auto-generated method stub
-
+		float rotSpeed = 45;
+		moveRotation(interval * rotSpeed, interval * rotSpeed, 0);
 	}
-
 }

@@ -24,6 +24,9 @@ public class Angel extends Game {
 //		entities.add(new Flower());
 //		entities.add(new Sierpinski2dDet());
 //		entities.add(new Sierpinski2dRnd());
-		entities.add(new Sierpinski3dDet());
+//		entities.add(new Sierpinski3dDet());
+//		entities.add(new Sierpinski3dRnd());
+		entities.add(new Sierpinski2dDetMnt());
 	}
+
 }

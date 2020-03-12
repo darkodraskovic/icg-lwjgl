@@ -1,6 +1,8 @@
 #version 330
 
-in  vec3 color;
+in vec4 position;
+in vec3 color;
+in vec2 texCoord;
 
 out vec4 fragColor;
 
