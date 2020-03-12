@@ -13,14 +13,12 @@ public class Triangle extends Entity {
 		Shader shader = new Shader("/shaders/vertex.vs", "/shaders/fragment.fs");
 		setShader(shader);
 
-		Mesh mesh = new Mesh();
-		mesh.setMode(GL_LINES);
+		mesh = new Mesh(GL_LINES);
 		float[] vertices = new float[] { 0.0f, 0.5f, -1.0f, -0.5f, -0.5f, -1.0f, 0.5f, -0.5f, -1.0f };
 		float[] colors = new float[] { 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f };
 		mesh.genArrayBufferf(vertices, 0, 3);
 		mesh.genArrayBufferf(colors, 1, 3);
 		mesh.genElementBuffer(new int[] { 0, 1, 1, 2, 2, 0 });
-		setMesh(mesh);
 	}
 
 	@Override

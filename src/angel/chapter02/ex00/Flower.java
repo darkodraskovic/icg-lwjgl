@@ -15,9 +15,7 @@ public class Flower extends Entity {
 		Shader shader = new Shader("/shaders/vertex.vs", "/shaders/fragment.fs");
 		setShader(shader);
 
-		Mesh mesh = new Mesh();
-		mesh.setMode(GL_LINE_STRIP);
-		setMesh(mesh);
+		mesh = new Mesh(GL_LINE_STRIP);
 		
 		// vertices
 		ArrayList<Float> vs = new ArrayList<Float>();

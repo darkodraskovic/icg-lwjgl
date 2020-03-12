@@ -30,25 +30,13 @@ public abstract class Game implements ILogic {
 	private static final float FOV = (float) Math.toRadians(60.0f);
 	private static final float Z_NEAR = 0.01f;
 	private static final float Z_FAR = 1000.f;
-	protected float cameraPosStep = 0.05f;
+	protected float cameraPosStep = 0.08f;
 	private final Vector3f cameraInc = new Vector3f();
 	private final Camera camera;
 
 	private final Transformation transformation = new Transformation();
 
 	protected ArrayList<Entity> entities;
-
-//	public static void main(String[] args) {
-//		try {
-//			boolean vSync = true;
-//			ILogic gameLogic = new MyGame();
-//			App game = new App("GAME", 600, 480, vSync, gameLogic);
-//			game.run();
-//		} catch (Exception excp) {
-//			excp.printStackTrace();
-//			System.exit(-1);
-//		}
-//	}
 
 	public Game() {
 		camera = new Camera();

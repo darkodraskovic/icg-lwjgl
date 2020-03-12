@@ -22,6 +22,8 @@ public class Angel extends Game {
 	@Override
 	public void init(Window window) throws Exception {
 //		entities.add(new Flower());
-		entities.add(new Sierpinski00());
+//		entities.add(new Sierpinski2dDet());
+//		entities.add(new Sierpinski2dRnd());
+		entities.add(new Sierpinski3dDet());
 	}
 }

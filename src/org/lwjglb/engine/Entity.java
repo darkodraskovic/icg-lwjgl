@@ -7,7 +7,7 @@ import org.lwjglb.engine.graph.Shader;
 
 public abstract class Entity {
 
-	private Mesh mesh;
+	public Mesh mesh;
 
 	private Shader shader;
 	private String[] transformUniforms = new String[] { "projectionMatrix", "viewMatrix", "modelViewMatrix", };
@@ -36,14 +36,6 @@ public abstract class Entity {
 		for (String uniform : transformUniforms) {
 			shader.createUniform(uniform);
 		}
-	}
-
-	public Mesh getMesh() {
-		return mesh;
-	}
-
-	public void setMesh(Mesh mesh) {
-		this.mesh = mesh;
 	}
 
 	public Vector3f getPosition() {

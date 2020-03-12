@@ -10,17 +10,15 @@ import org.lwjglb.engine.Utils;
 import org.lwjglb.engine.graph.Mesh;
 import org.lwjglb.engine.graph.Shader;
 
-public class Sierpinski00 extends Entity {
+public class Sierpinski2dDet extends Entity {
 
 	ArrayList<Vector3f> vertices;
 	
-	public Sierpinski00() throws Exception{
+	public Sierpinski2dDet() throws Exception{
 		Shader shader = new Shader("/shaders/angel/vertex.vs", "/shaders/angel/fragment.fs");
 		setShader(shader);
 
-		Mesh mesh = new Mesh();
-		mesh.setMode(GL_TRIANGLES);
-		setMesh(mesh);
+		mesh = new Mesh(GL_TRIANGLES);
 		
 		// vertices
 		vertices = new ArrayList<Vector3f>();

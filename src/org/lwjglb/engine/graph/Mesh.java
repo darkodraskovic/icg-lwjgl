@@ -35,18 +35,17 @@ public class Mesh {
 	/**
 	 * The kind of primitives being constructed.
 	 */
-	private int mode;
+	public int mode;
 
 	/**
 	 * The total number of vertices.
 	 */
 	private int count;
 
-	public int getMode() {
-		return mode;
+	public Mesh() {
 	}
 
-	public void setMode(int mode) {
+	public Mesh(int mode) {
 		this.mode = mode;
 	}
 
@@ -91,7 +90,7 @@ public class Mesh {
 
 		vbos.add(vbo);
 	}
-	
+
 	public void genElementBuffer(int[] indices) {
 		int vbo;
 		IntBuffer buffer = null;
