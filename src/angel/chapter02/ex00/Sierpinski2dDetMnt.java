@@ -1,5 +1,6 @@
 package angel.chapter02.ex00;
 
+import static org.lwjgl.opengl.GL11.GL_LINES;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 
 import java.util.ArrayList;
@@ -14,7 +15,8 @@ public class Sierpinski2dDetMnt extends Entity {
 
 	public Sierpinski2dDetMnt() throws Exception {
 		setShader("/shaders/angel/vertex.vs", "/shaders/angel/fragment-color.fs");
-		mesh = new Mesh(GL_TRIANGLES);
+		mesh = new Mesh(GL_LINES);
+//		mesh = new Mesh(GL_TRIANGLES);
 
 		Vector3f a = new Vector3f(-1, -1, 0);
 		Vector3f b = new Vector3f(1, -1, 0);
@@ -24,12 +26,30 @@ public class Sierpinski2dDetMnt extends Entity {
 		mesh.genArrayBufferv3f(vertices);
 	}
 
+	private void strokeTriangle(Vector3f a, Vector3f b, Vector3f c) {
+		vertices.add(a);
+		vertices.add(b);
+		vertices.add(b);
+		vertices.add(c);
+		vertices.add(c);
+		vertices.add(a);
+	}
+
+	private void fillTriangle(Vector3f a, Vector3f b, Vector3f c) {
+		vertices.add(a);
+		vertices.add(b);
+		vertices.add(c);
+	}
+
 	private void divide(Vector3f a, Vector3f b, Vector3f c, int numDivisions) {
 		if (numDivisions < 1) {
-			vertices.add(a);
-			vertices.add(b);
-			vertices.add(c);
-			return;
+			if (mesh.mode == GL_LINES) {
+				strokeTriangle(a, b, c);
+				return;
+			} else if (mesh.mode == GL_TRIANGLES) {
+				fillTriangle(a, b, c);
+				return;
+			}
 		}
 
 		Vector3f ab = a.add(b, new Vector3f()).mul(0.5f);
@@ -46,7 +66,7 @@ public class Sierpinski2dDetMnt extends Entity {
 		divide(ab, b, bc, numDivisions);
 		divide(ac, bc, c, numDivisions);
 	}
-	
+
 	private void randomize(Vector3f vec, float scl) {
 		float rndX = (float) Math.random() / scl - 1 / scl / 2;
 		float rndY = (float) Math.random() / scl - 1 / scl / 2;
