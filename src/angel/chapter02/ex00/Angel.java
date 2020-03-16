@@ -28,8 +28,9 @@ public class Angel extends Game {
 //		entities.add(new Sierpinski3dRnd());
 //		entities.add(new Sierpinski2dDetMnt());
 //		entities.add(new Sierpinski3dDetMnt());
+		
 		entities.add(new Shape(64, 64));
-
+		cameraPosStep = 1.5f;
 		camera.setPosition(0, 0, 64);
 	}
 

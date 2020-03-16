@@ -1,14 +1,17 @@
-package org.lwjglb.engine.graph;
+package org.lwjglb.engine.pixel;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
+import org.joml.Vector2i;
 import org.joml.Vector3f;
+import org.lwjglb.engine.graph.Mesh;
 
-public class PixelBuffer extends Mesh {
+public class Buffer extends Mesh {
 	private int width;
 	private ArrayList<Vector3f> pixels = new ArrayList<Vector3f>();
 
-	public PixelBuffer(int width, int height) {
+	public Buffer(int width, int height) {
 		this.width = width;
 		ArrayList<Vector3f> points = new ArrayList<Vector3f>();
 		for (int y = 0; y < height; y++) {
@@ -23,6 +26,13 @@ public class PixelBuffer extends Mesh {
 
 	public void update() {
 		genArrayBufferv3f(pixels, 1);
+	}
+
+	public void writePixels(ArrayList<Vector2i> pixels, Vector3f color) {
+		for (Iterator<Vector2i> iterator = pixels.iterator(); iterator.hasNext();) {
+			Vector2i point = (Vector2i) iterator.next();
+			writePixel(point.x, point.y, color);
+		}
 	}
 
 	public void writePixel(int x, int y, Vector3f color) {
