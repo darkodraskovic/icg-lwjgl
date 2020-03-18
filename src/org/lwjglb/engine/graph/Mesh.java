@@ -31,9 +31,9 @@ import org.lwjglb.engine.Utils;
 
 public class Mesh {
 	private int vao = glGenVertexArrays();
-	private ArrayList<Integer> vbos = new ArrayList<Integer>();
+	private ArrayList<Integer> attrVBOs = new ArrayList<Integer>();
 	private int[] indices;
-	private int idxVbo;
+	private int idxVBO;
 
 	/**
 	 * The kind of primitives being constructed.
@@ -92,11 +92,11 @@ public class Mesh {
 			}
 		}
 
-		vbos.add(vbo);
+		attrVBOs.add(vbo);
 	}
 
 	public void genArrayBufferf(float[] attribArray, int size) {
-		genArrayBufferf(attribArray, vbos.size(), size);
+		genArrayBufferf(attribArray, attrVBOs.size(), size);
 	}
 
 	public void genArrayBufferv3f(ArrayList<Vector3f> attribList, int index) {
@@ -105,7 +105,7 @@ public class Mesh {
 	}
 
 	public void genArrayBufferv3f(ArrayList<Vector3f> attribList) {
-		genArrayBufferv3f(attribList, vbos.size());
+		genArrayBufferv3f(attribList, attrVBOs.size());
 	}
 
 	// GL_ELEMENT_ARRAY_BUFFER
@@ -118,8 +118,8 @@ public class Mesh {
 			glBindVertexArray(vao);
 
 			// Create the VBO and bind to it
-			idxVbo = glGenBuffers();
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idxVbo);
+			idxVBO = glGenBuffers();
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idxVBO);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
 
 			// Unbind the VBO
@@ -178,18 +178,17 @@ public class Mesh {
 
 	// CLEANUP
 	public void cleanup() {
-		// glDisableVertexAttribArray(0);
-
-		// Delete the VBO
+		// Delete the attribute VBOs
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		for (Iterator<Integer> iterator = vbos.iterator(); iterator.hasNext();) {
+		for (Iterator<Integer> iterator = attrVBOs.iterator(); iterator.hasNext();) {
 			Integer integer = (Integer) iterator.next();
 			glDeleteBuffers(integer);
 		}
 
+		// Delete the index VBO		
 		if (indices != null) {
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-			glDeleteBuffers(idxVbo);
+			glDeleteBuffers(idxVBO);
 		}
 
 		// Delete the VAO

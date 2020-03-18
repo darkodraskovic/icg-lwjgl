@@ -21,7 +21,10 @@ public class Angel extends Game {
 
 	@Override
 	public void init(Window window) throws Exception {
+		// TEST
 //		entities.add(new Flower());
+		
+		// SIERPINSKI
 //		entities.add(new Sierpinski2dDet());
 //		entities.add(new Sierpinski2dRnd());
 //		entities.add(new Sierpinski3dDet());
@@ -29,6 +32,7 @@ public class Angel extends Game {
 //		entities.add(new Sierpinski2dDetMnt());
 //		entities.add(new Sierpinski3dDetMnt());
 		
+		// PIXEL
 		entities.add(new Shape(64, 64));
 		cameraPosStep = 1.5f;
 		camera.setPosition(0, 0, 64);

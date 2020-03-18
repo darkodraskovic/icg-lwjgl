@@ -20,7 +20,7 @@ public class Buffer extends Mesh {
 				pixels.add(new Vector3f(1, 1, 1));
 			}
 		}
-		genArrayBufferv3f(points);
+		genArrayBufferv3f(points, 0);
 		update();
 	}
 
@@ -30,7 +30,7 @@ public class Buffer extends Mesh {
 
 	public void writePixels(ArrayList<Vector2i> pixels, Vector3f color) {
 		for (Iterator<Vector2i> iterator = pixels.iterator(); iterator.hasNext();) {
-			Vector2i point = (Vector2i) iterator.next();
+			Vector2i point = iterator.next();
 			writePixel(point.x, point.y, color);
 		}
 	}

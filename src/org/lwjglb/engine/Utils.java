@@ -23,7 +23,7 @@ public class Utils {
 		int index = 0;
 		float[] array = new float[list.size() * 2];
 		for (Iterator<Vector2f> iterator = list.iterator(); iterator.hasNext();) {
-			Vector2f vector2f = (Vector2f) iterator.next();
+			Vector2f vector2f = iterator.next();
 			array[index++] = vector2f.x;
 			array[index++] = vector2f.y;
 		}
@@ -34,7 +34,7 @@ public class Utils {
 		int index = 0;
 		float[] array = new float[list.size() * 3];
 		for (Iterator<Vector3f> iterator = list.iterator(); iterator.hasNext();) {
-			Vector3f vector3f = (Vector3f) iterator.next();
+			Vector3f vector3f = iterator.next();
 			array[index++] = vector3f.x;
 			array[index++] = vector3f.y;
 			array[index++] = vector3f.z;
@@ -50,5 +50,4 @@ public class Utils {
 		}
 		return array;
 	}
-
 }
