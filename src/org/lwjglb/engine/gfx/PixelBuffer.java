@@ -1,4 +1,4 @@
-package org.lwjglb.engine.pixel;
+package org.lwjglb.engine.gfx;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -7,11 +7,11 @@ import org.joml.Vector2i;
 import org.joml.Vector3f;
 import org.lwjglb.engine.graph.Mesh;
 
-public class Buffer extends Mesh {
+public class PixelBuffer extends Mesh {
 	private int width;
 	private ArrayList<Vector3f> pixels = new ArrayList<Vector3f>();
 
-	public Buffer(int width, int height) {
+	public PixelBuffer(int width, int height) {
 		this.width = width;
 		ArrayList<Vector3f> points = new ArrayList<Vector3f>();
 		for (int y = 0; y < height; y++) {
