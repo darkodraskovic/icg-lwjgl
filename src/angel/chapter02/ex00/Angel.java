@@ -30,7 +30,7 @@ public class Angel extends Game {
 //		entities.add(new Sierpinski3dDet());
 //		entities.add(new Sierpinski3dRnd());
 //		entities.add(new Sierpinski2dDetMnt());
-//		entities.add(new Sierpinski3dDetMnt());
+		entities.add(new Sierpinski3dDetMnt());
 		
 		// PIXEL
 //		entities.add(new Shape(64, 64));

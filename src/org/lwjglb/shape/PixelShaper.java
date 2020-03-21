@@ -1,4 +1,4 @@
-package org.lwjglb.engine.gfx;
+package org.lwjglb.shape;
 
 import java.util.ArrayList;
 

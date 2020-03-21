@@ -25,9 +25,9 @@ import org.lwjglb.engine.graph.Camera;
 import org.lwjglb.engine.graph.Transformation;
 
 public abstract class Game implements ILogic {
-	protected float mouseSensitivity = 0.2f;
+	protected float mouseSensitivity = 0.01f;
 
-	private static final float FOV = (float) Math.toRadians(60.0f);
+	private static final float FOV = (float)Math.PI/3;
 	private static final float Z_NEAR = 0.01f;
 	private static final float Z_FAR = 1000.f;
 	private final Vector3f cameraInc = new Vector3f();
@@ -73,7 +73,7 @@ public abstract class Game implements ILogic {
 		camera.movePosition(cameraInc.x * cameraPosStep, cameraInc.y * cameraPosStep, cameraInc.z * cameraPosStep);
 
 		// Update camera based on mouse
-		if (mouseInput.isMiddleButtonPressed()) {
+		if (mouseInput.isRightButtonPressed()) {
 			Vector2f rotVec = mouseInput.getDisplVec();
 			camera.moveRotation(rotVec.x * mouseSensitivity, rotVec.y * mouseSensitivity, 0);
 		}

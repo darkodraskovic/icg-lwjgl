@@ -63,7 +63,7 @@ public class Mesh {
 	 */
 	public void genArrayBufferf(float[] attribArray, int index, int size) {
 		count = attribArray.length / size;
-		
+
 		int vbo;
 		FloatBuffer buffer = null;
 		try {
@@ -185,7 +185,7 @@ public class Mesh {
 			glDeleteBuffers(integer);
 		}
 
-		// Delete the index VBO		
+		// Delete the index VBO
 		if (indices != null) {
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 			glDeleteBuffers(idxVBO);

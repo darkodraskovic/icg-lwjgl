@@ -54,6 +54,6 @@ public class Flower extends Entity {
 
 	@Override
 	public void update(float interval) {
-		moveRotation(0, 0, interval * 45);
+		moveRotation(0, 0, interval * (float)Math.PI/4);
 	}
 }

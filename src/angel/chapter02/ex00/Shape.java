@@ -8,7 +8,7 @@ import org.joml.Vector2i;
 import org.joml.Vector3f;
 import org.lwjglb.engine.Entity;
 import org.lwjglb.engine.gfx.PixelBuffer;
-import org.lwjglb.engine.gfx.PixelShaper;
+import org.lwjglb.shape.PixelShaper;
 
 public class Shape extends Entity {
 	public PixelBuffer frameBuffer;

@@ -135,7 +135,6 @@ public class Sierpinski3dDetMnt extends Entity {
 
 	@Override
 	public void update(float interval) {
-		float rotSpeed = 10;
-		moveRotation(0, interval * rotSpeed, 0);
+		moveRotation(0, interval * (float) Math.PI / 6, 0);
 	}
 }
