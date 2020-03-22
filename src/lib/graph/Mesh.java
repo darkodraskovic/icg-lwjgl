@@ -1,4 +1,4 @@
-package org.lwjglb.engine.graph;
+package lib.graph;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
@@ -27,7 +27,8 @@ import java.util.Iterator;
 
 import org.joml.Vector3f;
 import org.lwjgl.system.MemoryUtil;
-import org.lwjglb.engine.Utils;
+
+import lib.Utils;
 
 public class Mesh {
 	private int vao = glGenVertexArrays();

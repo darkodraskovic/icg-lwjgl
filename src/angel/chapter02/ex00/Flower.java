@@ -4,8 +4,8 @@ import static org.lwjgl.opengl.GL11.GL_LINE_STRIP;
 
 import java.util.ArrayList;
 
-import org.lwjglb.engine.Entity;
-import org.lwjglb.engine.graph.Mesh;
+import lib.Entity;
+import lib.graph.Mesh;
 
 public class Flower extends Entity {
 	public Flower() throws Exception {

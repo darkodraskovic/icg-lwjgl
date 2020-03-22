@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>discrete</name>
+			<type>2</type>
+			<location>/media/darko/depot/Radovi/AppDev/Eclipse/discrete/src</location>
+		</link>
+	</linkedResources>
 </projectDescription>

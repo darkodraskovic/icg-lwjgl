@@ -1,10 +1,10 @@
-package org.lwjglb.game;
+package game;
 
-import org.lwjglb.engine.App;
-import org.lwjglb.engine.ILogic;
-import org.lwjglb.engine.Window;
+import lib.App;
+import lib.ILogic;
+import lib.Window;
 
-public class MyGame extends org.lwjglb.engine.app.Game {
+public class MyGame extends lib.app.Game {
 	public static void main(String[] args) {
 		try {
 			boolean vSync = true;

@@ -1,9 +1,9 @@
 package angel.chapter02.ex00;
 
-import org.lwjglb.engine.App;
-import org.lwjglb.engine.ILogic;
-import org.lwjglb.engine.Window;
-import org.lwjglb.engine.app.Game;
+import lib.App;
+import lib.ILogic;
+import lib.Window;
+import lib.app.Game;
 
 public class Angel extends Game {
 
@@ -30,12 +30,12 @@ public class Angel extends Game {
 //		entities.add(new Sierpinski3dDet());
 //		entities.add(new Sierpinski3dRnd());
 //		entities.add(new Sierpinski2dDetMnt());
-		entities.add(new Sierpinski3dDetMnt());
+//		entities.add(new Sierpinski3dDetMnt());
 		
 		// PIXEL
-//		entities.add(new Shape(64, 64));
-//		cameraPosStep = 1.5f;
-//		camera.setPosition(0, 0, 64);
+		entities.add(new Shape(64, 64));
+		cameraPosStep = 1.5f;
+		camera.setPosition(0, 0, 64);
 		
 		// TURTLE
 	}

@@ -6,9 +6,10 @@ import java.util.ArrayList;
 
 import org.joml.Vector2i;
 import org.joml.Vector3f;
-import org.lwjglb.engine.Entity;
-import org.lwjglb.engine.gfx.PixelBuffer;
-import org.lwjglb.shape.PixelShaper;
+
+import discrete.shape.Stroke;
+import lib.Entity;
+import lib.gfx.PixelBuffer;
 
 public class Shape extends Entity {
 	public PixelBuffer frameBuffer;
@@ -17,10 +18,10 @@ public class Shape extends Entity {
 		setShader("/shaders/angel/vertex.vs", "/shaders/angel/fragment.fs");
 		setFrameBuffer(width, height);
 
-		ArrayList<Vector2i> line1 = PixelShaper.bresenhamLine(5, 5, 2, 40);
+		ArrayList<Vector2i> line1 = Stroke.bresenhamLine(5, 5, 2, 40);
 		frameBuffer.writePixels(line1, new Vector3f(1, 0, 0));
 
-		ArrayList<Vector2i> line2 = PixelShaper.bresenhamLine(5, 3, 20, 1);
+		ArrayList<Vector2i> line2 = Stroke.bresenhamLine(5, 3, 20, 1);
 		frameBuffer.writePixels(line2, new Vector3f(0, 1, 0));
 		
 		frameBuffer.update();

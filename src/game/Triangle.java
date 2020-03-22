@@ -1,10 +1,10 @@
-package org.lwjglb.game;
+package game;
 
 import static org.lwjgl.opengl.GL11.GL_LINES;
 
-import org.lwjglb.engine.Entity;
-import org.lwjglb.engine.graph.Mesh;
-import org.lwjglb.engine.graph.Shader;
+import lib.Entity;
+import lib.graph.Mesh;
+import lib.graph.Shader;
 
 public class Triangle extends Entity {
 	public Triangle() throws Exception {
@@ -23,6 +23,6 @@ public class Triangle extends Entity {
 
 	@Override
 	public void update(float interval) {
-		moveRotation(0, 0, interval * 45);
+		moveRotation(0, 0, interval * (float)Math.PI/4);
 	}
 }

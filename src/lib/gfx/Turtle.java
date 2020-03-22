@@ -1,11 +1,12 @@
-package org.lwjglb.engine.gfx;
+package lib.gfx;
 
 import static org.lwjgl.opengl.GL11.GL_LINES;
 
 import java.util.ArrayList;
 
 import org.joml.Vector3f;
-import org.lwjglb.engine.graph.Mesh;
+
+import lib.graph.Mesh;
 
 public class Turtle extends Mesh {
 

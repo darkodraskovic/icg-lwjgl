@@ -1,4 +1,4 @@
-package org.lwjglb.engine.app;
+package lib.app;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_A;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_D;
@@ -17,12 +17,13 @@ import java.util.Iterator;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-import org.lwjglb.engine.Entity;
-import org.lwjglb.engine.ILogic;
-import org.lwjglb.engine.Mouse;
-import org.lwjglb.engine.Window;
-import org.lwjglb.engine.graph.Camera;
-import org.lwjglb.engine.graph.Transformation;
+
+import lib.Entity;
+import lib.ILogic;
+import lib.Mouse;
+import lib.Window;
+import lib.graph.Camera;
+import lib.graph.Transformation;
 
 public abstract class Game implements ILogic {
 	protected float mouseSensitivity = 0.01f;

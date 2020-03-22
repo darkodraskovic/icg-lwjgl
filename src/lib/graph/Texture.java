@@ -1,4 +1,4 @@
-package org.lwjglb.engine.graph;
+package lib.graph;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;

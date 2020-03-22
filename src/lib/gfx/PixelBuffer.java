@@ -1,11 +1,12 @@
-package org.lwjglb.engine.gfx;
+package lib.gfx;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.joml.Vector2i;
 import org.joml.Vector3f;
-import org.lwjglb.engine.graph.Mesh;
+
+import lib.graph.Mesh;
 
 public class PixelBuffer extends Mesh {
 	private int width;

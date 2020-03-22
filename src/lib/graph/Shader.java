@@ -1,4 +1,4 @@
-package org.lwjglb.engine.graph;
+package lib.graph;
 
 import static org.lwjgl.opengl.GL20.GL_COMPILE_STATUS;
 import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
@@ -30,7 +30,8 @@ import java.util.Map;
 
 import org.joml.Matrix4f;
 import org.lwjgl.system.MemoryStack;
-import org.lwjglb.engine.Utils;
+
+import lib.Utils;
 
 public class Shader {
 

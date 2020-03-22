@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.joml.Vector3f;
-import org.lwjglb.engine.Entity;
-import org.lwjglb.engine.graph.Mesh;
+
+import lib.Entity;
+import lib.graph.Mesh;
 
 public class Sierpinski3dDet extends Entity {
 

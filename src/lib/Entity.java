@@ -1,9 +1,10 @@
-package org.lwjglb.engine;
+package lib;
 
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import org.lwjglb.engine.graph.Mesh;
-import org.lwjglb.engine.graph.Shader;
+
+import lib.graph.Mesh;
+import lib.graph.Shader;
 
 public abstract class Entity {
 

@@ -1,8 +1,9 @@
-package org.lwjglb.engine.graph;
+package lib.graph;
 
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import org.lwjglb.engine.Entity;
+
+import lib.Entity;
 
 public class Transformation {
 
