@@ -11,7 +11,7 @@ import lib.graph.Mesh;
 public class Turtle extends Mesh {
 
 	// vertices
-	private boolean penDown = true;
+	private boolean penDown = false;
 	private float penAngle = 0;
 	private Vector3f penPosition = new Vector3f();
 	private ArrayList<Vector3f> vertices = new ArrayList<Vector3f>();
@@ -34,6 +34,18 @@ public class Turtle extends Mesh {
 			vertices.add(new Vector3f(penPosition));
 			colors.add(new Vector3f(color));
 		}
+	}
+
+	public void to(Vector3f destination) {
+		Vector3f dirVec = destination.sub(penPosition, new Vector3f());
+		float dirAngle = (float) Math.atan2(dirVec.y, dirVec.x);
+		float angleDiff = dirAngle - penAngle;
+		if (angleDiff < 0) {
+			right(Math.abs(angleDiff));
+		} else {
+			left(Math.abs(angleDiff));
+		}
+		forward(dirVec.length());
 	}
 
 	public void up() {
