@@ -1,4 +1,4 @@
-package angel.chapter02.ex00;
+package angel.chapter02;
 
 import lib.App;
 import lib.ILogic;
@@ -37,7 +37,8 @@ public class Angel extends Game {
 //		cameraPosStep = 1.5f;
 //		camera.setPosition(0, 0, 64);
 		
-		// TURTLE
-		entities.add(new SierpinskiTurtle());
+		// TURTLE, KOCH
+//		entities.add(new SierpinskiTurtle());
+		entities.add(new KochEntity());
 	}
 }

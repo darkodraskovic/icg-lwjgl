@@ -5,25 +5,22 @@ import java.util.ArrayList;
 import org.joml.Vector3f;
 
 public class Sierpinski {
-	private static ArrayList<Vector3f> vertices = new ArrayList<Vector3f>();
+	private static ArrayList<Vector3f> points = new ArrayList<Vector3f>();
 
 	// 2D
-	static public ArrayList<Vector3f> sierpinski2D(int numDivisions) {
-		vertices = new ArrayList<Vector3f>();
+	static public ArrayList<Vector3f> sierpinski2D(Vector3f a, Vector3f b, Vector3f c, int numDivisions) {
+		points.clear();
 
-		Vector3f a = new Vector3f(-1, -1, 0);
-		Vector3f b = new Vector3f(1, -1, 0);
-		Vector3f c = new Vector3f(0, 1, 0);
 		divide(a, b, c, numDivisions);
 
-		return vertices;
+		return points;
 	}
 
 	static public void divide(Vector3f a, Vector3f b, Vector3f c, int numDivisions) {
 		if (numDivisions < 1) {
-			vertices.add(a);
-			vertices.add(b);
-			vertices.add(c);
+			points.add(a);
+			points.add(b);
+			points.add(c);
 			return;
 		}
 
@@ -39,7 +36,7 @@ public class Sierpinski {
 
 	// 3D
 	static public ArrayList<Vector3f> sierpinski3D(int numDivisions) {
-		vertices = new ArrayList<Vector3f>();
+		points = new ArrayList<Vector3f>();
 
 		Vector3f a = new Vector3f(-1, -1, -1);
 		Vector3f b = new Vector3f(0, -1, 1);
@@ -47,26 +44,26 @@ public class Sierpinski {
 		Vector3f d = new Vector3f(0, 1, 0);
 		divide(a, b, c, d, numDivisions);
 
-		return vertices;
+		return points;
 	}
 
 	static private void divide(Vector3f a, Vector3f b, Vector3f c, Vector3f d, int numDivisions) {
 		if (numDivisions < 1) {
-			vertices.add(a);
-			vertices.add(b);
-			vertices.add(c);
+			points.add(a);
+			points.add(b);
+			points.add(c);
 
-			vertices.add(a);
-			vertices.add(b);
-			vertices.add(d);
+			points.add(a);
+			points.add(b);
+			points.add(d);
 
-			vertices.add(a);
-			vertices.add(c);
-			vertices.add(d);
+			points.add(a);
+			points.add(c);
+			points.add(d);
 
-			vertices.add(b);
-			vertices.add(c);
-			vertices.add(d);
+			points.add(b);
+			points.add(c);
+			points.add(d);
 			return;
 		}
 

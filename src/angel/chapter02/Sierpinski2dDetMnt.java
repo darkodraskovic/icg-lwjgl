@@ -1,4 +1,4 @@
-package angel.chapter02.ex00;
+package angel.chapter02;
 
 import static org.lwjgl.opengl.GL11.GL_LINES;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;

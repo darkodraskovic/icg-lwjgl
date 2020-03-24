@@ -1,4 +1,4 @@
-package angel.chapter02.ex00;
+package angel.chapter02;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,11 @@ public class SierpinskiTurtle extends Entity {
 		Turtle turtle = new Turtle();
 		mesh = turtle;
 
-		ArrayList<Vector3f> gasket2D = Sierpinski.sierpinski2D(5);
+		Vector3f a = new Vector3f(-1, -1, 0);
+		Vector3f b = new Vector3f(1, -1, 0);
+		Vector3f c = new Vector3f(0, 1, 0);
+
+		ArrayList<Vector3f> gasket2D = Sierpinski.sierpinski2D(a, b, c, 5);
 		for (int i = 0; i < gasket2D.size() - 2; i += 3) {
 			turtle.to(gasket2D.get(i));
 			turtle.down();
